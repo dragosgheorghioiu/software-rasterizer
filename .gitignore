@@ -1,3 +1,4 @@
 rasterizer
 rasterizer.dSYM/
 compile_commands.json
+.cache/
