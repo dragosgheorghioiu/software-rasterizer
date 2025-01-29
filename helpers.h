@@ -1,7 +1,6 @@
 #ifndef HELPERS_H
 #define HELPERS_H
 
-#include "include/raylib.h"
 #include <stdint.h>
 
 typedef struct {
@@ -17,8 +16,7 @@ float edge_cross(const vec2_t *a, const vec2_t *b, const vec2_t *p);
 
 float raster_rules_bias(const vec2_t *a, const vec2_t *b);
 
-void draw_triangle(const vec2_t *p1, const vec2_t *p2, const vec2_t *p3,
-                   Color color);
+void draw_triangle(const vec2_t *p1, const vec2_t *p2, const vec2_t *p3);
 
 void vec2_rotate(vec2_t *v, vec2_t center, float angle);
 

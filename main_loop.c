@@ -13,13 +13,13 @@ void Render(vec2_t *vertices, RenderTexture2D framebuffer) {
   BeginTextureMode(framebuffer);
   ClearBackground(BLACK);
   if (show_triangle_1) {
-    draw_triangle(&vertices[0], &vertices[1], &vertices[2], RED);
+    draw_triangle(&vertices[0], &vertices[1], &vertices[2]);
   }
   if (show_triangle_2) {
-    draw_triangle(&vertices[3], &vertices[2], &vertices[1], BLUE);
+    draw_triangle(&vertices[3], &vertices[2], &vertices[1]);
   }
   if (show_triangle_3) {
-    draw_triangle(&vertices[4], &vertices[1], &vertices[0], GREEN);
+    draw_triangle(&vertices[4], &vertices[1], &vertices[0]);
   }
   EndTextureMode();
 

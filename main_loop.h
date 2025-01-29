@@ -2,6 +2,7 @@
 #define MAIN_LOOP_H
 
 #include "helpers.h"
+#include "include/raylib.h"
 
 #include <stdbool.h>
 

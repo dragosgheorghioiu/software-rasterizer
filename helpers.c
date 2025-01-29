@@ -1,4 +1,5 @@
 #include "helpers.h"
+#include "include/raylib.h"
 #include <math.h>
 
 /*
@@ -34,8 +35,7 @@ void vec2_rotate(vec2_t *v, vec2_t center, float angle) {
   v->y += center.y;
 }
 
-void draw_triangle(const vec2_t *p1, const vec2_t *p2, const vec2_t *p3,
-                   Color color) {
+void draw_triangle(const vec2_t *p1, const vec2_t *p2, const vec2_t *p3) {
   uint16_t x_min = floor(three_way_min(p1->x, p2->x, p3->x));
   uint16_t y_min = floor(three_way_min(p1->y, p2->y, p3->y));
   uint16_t x_max = ceil(three_way_max(p1->x, p2->x, p3->x));
@@ -45,6 +45,8 @@ void draw_triangle(const vec2_t *p1, const vec2_t *p2, const vec2_t *p3,
   float bias1 = raster_rules_bias(p3, p2);
   float bias2 = raster_rules_bias(p1, p3);
 
+  float area = edge_cross(p1, p2, p3);
+
   for (int i = x_min; i < x_max; ++i) {
     for (int j = y_min; j < y_max; ++j) {
       vec2_t p = {i, j};
@@ -52,10 +54,22 @@ void draw_triangle(const vec2_t *p1, const vec2_t *p2, const vec2_t *p3,
       float w1 = edge_cross(p2, p3, &p) + bias1;
       float w2 = edge_cross(p3, p1, &p) + bias2;
 
+      float alpha = w0 / area;
+      float beta = w1 / area;
+      float gamma = w2 / area;
+
       // check if pixel is inside of triangle
       bool is_inside = w0 >= 0 && w1 >= 0 && w2 >= 0;
       if (is_inside) {
-        DrawPixel(i, j, color);
+        // compute new color
+        float interpolated_color_red = alpha * RED.r;
+        float interpolated_color_green = beta * GREEN.g;
+        float interpolated_color_blue = gamma * BLUE.b;
+        DrawPixel(i, j,
+                  (Color){.r = interpolated_color_red,
+                          .g = interpolated_color_green,
+                          .b = interpolated_color_blue,
+                          .a = 255});
       }
     }
   }
