@@ -8,6 +8,7 @@ static bool enable_rotation = true;
 
 extern uint16_t screenWidth, screenHeight;
 extern uint16_t virtualWidth, virtualHeight;
+extern float scale;
 
 void Render(vec2_t *vertices, RenderTexture2D framebuffer) {
   BeginTextureMode(framebuffer);
@@ -27,7 +28,7 @@ void Render(vec2_t *vertices, RenderTexture2D framebuffer) {
   ClearBackground(BLACK);
 
   DrawTexturePro(framebuffer.texture,
-                 (Rectangle){0, 0, virtualWidth, -virtualHeight},
+                 (Rectangle){0, 0, scale * (float)virtualWidth, scale * (float)(-virtualHeight)},
                  (Rectangle){0, 0, screenWidth, screenHeight}, (Vector2){0, 0},
                  0.0f, WHITE);
 
