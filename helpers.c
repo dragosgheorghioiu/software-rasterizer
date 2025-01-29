@@ -47,13 +47,24 @@ void draw_triangle(const vec2_t *p1, const vec2_t *p2, const vec2_t *p3) {
 
   float area = edge_cross(p1, p2, p3);
 
-  for (int i = x_min; i < x_max; ++i) {
-    for (int j = y_min; j < y_max; ++j) {
-      vec2_t p = {i, j};
-      float w0 = edge_cross(p1, p2, &p) + bias0;
-      float w1 = edge_cross(p2, p3, &p) + bias1;
-      float w2 = edge_cross(p3, p1, &p) + bias2;
+  float delta_w0_col = (p2->y - p3->y);
+  float delta_w1_col = (p3->y - p1->y);
+  float delta_w2_col = (p1->y - p2->y);
+  float delta_w0_row = (p3->x - p2->x);
+  float delta_w1_row = (p1->x - p3->x);
+  float delta_w2_row = (p2->x - p1->x);
 
+  vec2_t p0 = {x_min + 0.5f, y_min + 0.5f};
+  float w0_row = edge_cross(p2, p3, &p0) + bias0;
+  float w1_row = edge_cross(p3, p1, &p0) + bias1;
+  float w2_row = edge_cross(p1, p2, &p0) + bias2;
+
+  for (int i = y_min; i < y_max; ++i) {
+    float w0 = w0_row;
+    float w1 = w1_row;
+    float w2 = w2_row;
+
+    for (int j = x_min; j < x_max; ++j) {
       float alpha = w0 / area;
       float beta = w1 / area;
       float gamma = w2 / area;
@@ -65,13 +76,19 @@ void draw_triangle(const vec2_t *p1, const vec2_t *p2, const vec2_t *p3) {
         float interpolated_color_red = alpha * RED.r;
         float interpolated_color_green = beta * GREEN.g;
         float interpolated_color_blue = gamma * BLUE.b;
-        DrawPixel(i, j,
+        DrawPixel(j, i,
                   (Color){.r = interpolated_color_red,
                           .g = interpolated_color_green,
                           .b = interpolated_color_blue,
                           .a = 255});
       }
+      w0 += delta_w0_col;
+      w1 += delta_w1_col;
+      w2 += delta_w2_col;
     }
+    w0_row += delta_w0_row;
+    w1_row += delta_w1_row;
+    w2_row += delta_w2_row;
   }
 }
 
