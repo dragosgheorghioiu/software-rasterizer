@@ -6,7 +6,7 @@ It is based on the triangle rasterizer found [here](https://github.com/gustavope
 It implements:
 - top left rasterization rule
 - barycentric coordinates for interpolating colors
-- edge function per-pixel optimisation
+- edge function per-pixel optimization
 - subpixel coordinates
 
 ## Build and run
