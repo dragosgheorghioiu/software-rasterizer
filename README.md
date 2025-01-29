@@ -17,7 +17,9 @@ make
 # run
 ./rasterizer <scale>
 ```
-
 ## Controls
+```
 SPACE   - toggle rotation
 1, 2, 3 - toggle the triangles
+```
+
