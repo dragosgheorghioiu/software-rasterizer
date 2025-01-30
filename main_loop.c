@@ -20,7 +20,7 @@ void Render(vec2_t *vertices, RenderTexture2D framebuffer) {
     draw_triangle(&vertices[3], &vertices[2], &vertices[1]);
   }
   if (show_triangle_3) {
-    draw_triangle(&vertices[4], &vertices[1], &vertices[0]);
+    draw_triangle(&vertices[1], &vertices[0], &vertices[4]);
   }
   EndTextureMode();
 
@@ -28,7 +28,8 @@ void Render(vec2_t *vertices, RenderTexture2D framebuffer) {
   ClearBackground(BLACK);
 
   DrawTexturePro(framebuffer.texture,
-                 (Rectangle){0, 0, scale * (float)virtualWidth, scale * (float)(-virtualHeight)},
+                 (Rectangle){0, 0, scale * (float)virtualWidth,
+                             scale * (float)(-virtualHeight)},
                  (Rectangle){0, 0, screenWidth, screenHeight}, (Vector2){0, 0},
                  0.0f, WHITE);
 
